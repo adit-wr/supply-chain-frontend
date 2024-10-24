@@ -2,7 +2,7 @@
   <div class="item-list">
     <div class="header">
       <h2>Daftar Barang</h2>
-      <button class="add-btn" @click="$emit('add-item')">Tambah Item</button>
+      <button class="add-btn" @click="showAddForm">Tambah Item</button>
     </div>
     <div class="item-cards">
       <ItemCard
@@ -13,15 +13,29 @@
         @delete-item="deleteItem"
       />
     </div>
+    <Modal :visible="showForm" @close="cancelEditForm">
+      <ItemForm
+        :item="selectedItem"
+        :isEdit="isEdit"
+        @submit="handleSubmit"
+        @cancel="cancelEditForm"
+      />
+    </Modal>
   </div>
 </template>
 
 <script>
-import ItemCard from './ItemCard.vue';
+import ItemCard from "@/components/item/ItemCard.vue";
+import Modal from "@/components/Modal.vue";
+import ItemForm from "@/components/item/ItemForm.vue";
+
 export default {
   components: {
-    ItemCard
+    ItemCard,
+    Modal,
+    ItemForm,
   },
+
   data() {
     return {
       items: [
@@ -39,17 +53,57 @@ export default {
           stok: 80,
         },
       ],
+
+      showForm: false,
+      selectedItem: null,
+      isEdit: false,
     };
   },
 
   methods: {
+    showAddForm() {
+      this.selectedItem = { kode: "", nama: "", deskripsi: "", stok: 0 };
+      this.isEdit = false;
+      this.showForm = true;
+    },
+
+    editItem(item) {
+      this.selectedItem = { ...item };
+      this.isEdit = true;
+      this.showForm = true;
+    },
+
+    handleSubmit(item) {
+      if (
+        item.kode &&
+        item.nama &&
+        item.deskripsi &&
+        item.stok !== null &&
+        !isNaN(item.stok)
+      ) {
+        if (this.isEdit) {
+          const index = this.items.findIndex((i) => i.kode === item.kode);
+
+          this.items[index] = item;
+        } else {
+          this.items.push(item);
+        }
+      }
+
+      this.showForm = false;
+    },
+
+    cancelEditForm() {
+      this.showForm = false;
+    },
+
     deleteItem(kode) {
       this.items = this.items.filter((item) => item.kode !== kode);
-      this.$emit("delete-item", kode);
     },
   },
 };
 </script>
+
 <style scoped>
 .item-list {
   padding: 24px;

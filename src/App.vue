@@ -6,7 +6,11 @@
         <UserComponent />
       </div>
       <div v-else-if="currentPage === 'item'">
-        <ItemComponent />
+        <ItemComponent 
+          @add-item="handleAddItem"
+          @edit-item="handleEditItem"
+          @delete-item="handleDeleteItem"
+        />
       </div>
       <div v-else-if="currentPage === 'transaction'">
         <TransactionComponent />
@@ -31,12 +35,25 @@
     data() {
       return {
         currentPage: "user",
-      };
+        items: []
+      }
     },
     methods: {
       handleNavigation(page) {
         this.currentPage = page;
       },
+      handleAddItem(item) {
+        this.items.push = 'item';
+      },
+      handleEditItem(updatedItem) {
+        const index = this.items.findIndex(item => item.kode === updatedItem.kode);
+        if (index !== -1) {
+          this.items.splice(index, 1, updatedItem);
+        }
+      },
+      handleDeleteItem(itemKode) {
+        this.items = this.items.filter((item) => item.kode !== itemKode);
+      }
     },
   };
 </script>

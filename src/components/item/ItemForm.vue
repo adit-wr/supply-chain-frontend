@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <form @submit.prevent="submitForm">
-      <table>
+  <form @submit.prevent="submitForm">
+    <table>
+      <tbody>
         <tr>
           <td>Kode Barang</td>
           <td>
@@ -49,9 +49,9 @@
             </button>
           </td>
         </tr>
-      </table>
-    </form>
-  </div>
+      </tbody>
+    </table>
+  </form>
 </template>
 
 <script>
