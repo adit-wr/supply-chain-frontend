@@ -2,43 +2,26 @@
   <div class="item-list">
     <div class="header">
       <h2>Daftar Barang</h2>
-
       <button class="add-btn" @click="$emit('add-item')">Tambah Item</button>
     </div>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Kode Barang</th>
-            <th>Nama Barang</th>
-            <th>Deskripsi</th>
-            <th>Stok</th>
-            <th class="action-column">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in items" :key="item.kode">
-            <td>{{ item.kode }}</td>
-            <td>{{ item.nama }}</td>
-            <td>{{ item.deskripsi }}</td>
-            <td>{{ item.stok }}</td>
-            <td class="action-buttons">
-              <button class="edit-btn" @click="$emit('edit-item', item)">
-                Edit
-              </button>
-              <button class="delete-btn" @click="deleteItem(item.kode)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="item-cards">
+      <ItemCard
+        v-for="item in items"
+        :key="item.kode"
+        :item="item"
+        @edit-item="editItem"
+        @delete-item="deleteItem"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import ItemCard from './ItemCard.vue';
 export default {
+  components: {
+    ItemCard
+  },
   data() {
     return {
       items: [
