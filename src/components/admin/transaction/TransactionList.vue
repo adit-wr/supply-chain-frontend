@@ -3,7 +3,6 @@
     <div class="header">
       <h2>Daftar Transaksi</h2>
     </div>
-
     <div class="table-responsive">
       <table>
         <thead>
@@ -19,7 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="transaction in transactions" :key="transaction.kode">
+          <tr v-for="transaction in filteredTransactions" :key="transaction.kode">
             <td>{{ transaction.kode }}</td>
             <td>{{ transaction.namaKaryawan }}</td>
             <td>{{ transaction.namaBarang }}</td>
@@ -30,7 +29,7 @@
             <td class="action-buttons">
               <button
                 class="verif-btn"
-                @click="verifikasi(transaction)"
+                @click="openVerificationForm(transaction)"
                 :disabled="transaction.status === 'Returned'"
               >
                 {{
@@ -42,11 +41,27 @@
         </tbody>
       </table>
     </div>
+    <Modal :visible="showForm" @close="cancelVerificationForm">
+      <TransactionForm
+        :transaction="selectedTransaction"
+        @submit="handleVerification"
+        @cancel="cancelVerificationForm"
+      />
+    </Modal>
   </div>
 </template>
 
 <script>
+import { EventBus } from '@/utils/eventBus';
+import Modal from "@/components/Modal.vue";
+import TransactionForm from "@/components/admin/transaction/TransactionForm.vue";
+
 export default {
+  name: "transactions",
+  components: {
+    Modal,
+    TransactionForm,
+  },
   data() {
     return {
       transactions: [
@@ -55,32 +70,63 @@ export default {
           namaKaryawan: "Budiono",
           namaBarang: "Acer Nitro 15 AN515-58",
           jumlahPinjam: 1,
-          tanggalPinjam: "2024-8-10",
-          tanggalKembali: "2024-8-17",
-          status: "Returned",
+          tanggalPinjam: "2024-08-10",
+          tanggalKembali: "2024-08-17",
+          status: "Borrowed",
         },
-
         {
           kode: "2024002",
           namaKaryawan: "Sisil",
           namaBarang: "Lenovo LOQ 15 15IRH8",
           jumlahPinjam: 1,
-          tanggalPinjam: "2024-8-10",
-          tanggalKembali: "2024-8-17",
+          tanggalPinjam: "2024-08-10",
+          tanggalKembali: "2024-08-17",
           status: "Borrowed",
         },
       ],
+      showForm: false,
+      selectedTransaction: null,
+      searchQuery: '',
     };
   },
-  methods: {
-    verifikasi(transaction) {
-      if (transaction.status === "Borrowed") {
-        transaction.status = "Returned";
-      }
+  computed: {
+    filteredTransactions() {
+      return this.transactions.filter(transaction =>
+        transaction.namaKaryawan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        transaction.namaBarang.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        transaction.kode.includes(this.searchQuery)
+      );
     },
+  },
+  methods: {
+    openVerificationForm(transaction) {
+      this.selectedTransaction = { ...transaction };
+      this.showForm = true;
+    },
+    handleVerification(updatedTransaction) {
+      const index = this.transactions.findIndex((t) => t.kode === updatedTransaction.kode);
+      if (index !== -1) {
+        this.transactions[index] = { ...updatedTransaction, status: "Returned" };
+      }
+      this.cancelVerificationForm();
+    },
+    cancelVerificationForm() {
+      this.showForm = false;
+      this.selectedTransaction = null;
+    },
+    handleSearch(query) {
+      this.searchQuery = query;
+    },
+  },
+  mounted() {
+    EventBus.on('search', this.handleSearch);
+  },
+  beforeUnmount() {
+    EventBus.off('search', this.handleSearch);
   },
 };
 </script>
+
 <style scoped>
 .transaction-list {
   padding: 24px;
@@ -144,30 +190,29 @@ button {
 }
 
 .verif-btn {
-  background-color: #4caf50;
+  background-color: #754bc5;
   color: white;
 }
 
-.verif-btn:hover {
-  background-color: #45a049;
+.return-btn:hover {
+  background-color: #5a37a0;
 }
 
 .verif-btn[disabled] {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 @media (max-width: 600px) {
   th,
   td {
     padding: 8px 10px;
   }
-
   .action-buttons {
     display: flex;
     flex-direction: column;
     align-items: stretch;
   }
-
   .action-buttons button {
     margin: 5px 0;
   }

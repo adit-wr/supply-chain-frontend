@@ -1,9 +1,6 @@
 <template>
   <div class="item-list">
-    <div class="header">
-      <h2>Daftar Barang</h2>
-      <button class="add-btn" @click="showAddForm">Tambah Item</button>
-    </div>
+    <h2>Daftar Barang</h2>
     <div class="item-cards">
       <ItemCard
         v-for="item in items"
