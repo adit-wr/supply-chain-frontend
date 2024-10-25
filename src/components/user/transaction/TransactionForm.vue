@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="transaction-form">
       <form @submit.prevent="submitForm">
-        <h2>Peminjaman Barang</h2>
+        <h2>Pengembalian Barang</h2>
         <div>
           <label for="kode">Kode Barang:</label>
           <input type="text" v-model="form.kode" id="kode" :disabled="true" />
@@ -11,17 +11,13 @@
           <input type="text" v-model="form.nama" id="nama" :disabled="true" />
         </div>
         <div>
-          <label for="deskripsi">Deskripsi:</label>
+          <label for="tanggal_pinjam">Tanggal Pinjam:</label>
           <input
-            type="text"
-            v-model="form.deskripsi"
-            id="deskripsi"
+            type="date"
+            v-model="form.tanggal_pinjam"
+            id="tanggal_pinjam"
             :disabled="true"
           />
-        </div>
-        <div>
-          <label for="tanggal_pinjam">Tanggal Pinjam:</label>
-          <input type="date" v-model="form.tanggal_pinjam" id="tanggal_pinjam" />
         </div>
         <div>
           <label for="tanggal_kembali">Tanggal Kembali:</label>
@@ -33,7 +29,12 @@
         </div>
         <div>
           <label for="jumlah_pinjam">Jumlah Pinjam:</label>
-          <input type="number" v-model="form.jumlah_pinjam" id="jumlah_pinjam" />
+          <input
+            type="number"
+            v-model="form.jumlah_pinjam"
+            id="jumlah_pinjam"
+            :disabled="true"
+          />
         </div>
         <div class="button-container">
           <button type="button" @click="cancelForm">Batal</button>
@@ -46,18 +47,16 @@
   <script>
   export default {
     props: {
-      item: Object,
-      isEdit: Boolean,
+      transaction: Object,
     },
     data() {
       return {
         form: {
-          kode: this.item ? this.item.kode : "",
-          nama: this.item ? this.item.nama : "",
-          deskripsi: this.item ? this.item.deskripsi : "",
-          tanggal_pinjam: "",
+          kode: this.transaction ? this.transaction.kode : "",
+          nama: this.transaction ? this.transaction.namaBarang : "",
+          tanggal_pinjam: this.transaction ? this.transaction.tanggalPinjam : "",
           tanggal_kembali: "",
-          jumlah_pinjam: 1,
+          jumlah_pinjam: this.transaction ? this.transaction.jumlahPinjam : 1,
         },
       };
     },
@@ -70,11 +69,12 @@
       },
     },
     watch: {
-      item(newItem) {
-        if (newItem) {
-          this.form.kode = newItem.kode;
-          this.form.nama = newItem.nama;
-          this.form.deskripsi = newItem.deskripsi;
+      transaction(newTransaction) {
+        if (newTransaction) {
+          this.form.kode = newTransaction.kode;
+          this.form.nama = newTransaction.namaBarang;
+          this.form.tanggal_pinjam = newTransaction.tanggalPinjam;
+          this.form.jumlah_pinjam = newTransaction.jumlahPinjam;
         }
       },
     },
@@ -90,7 +90,7 @@
     margin: auto;
     background: #f0f0f0;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 8px;;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
