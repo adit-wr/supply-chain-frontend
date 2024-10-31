@@ -34,6 +34,9 @@ export default {
 <style scoped>
 .item-card {
   transition: transform 0.2s, box-shadow 0.2s;
+  border:  1px splid #ddd;
+  padding: 10px;
+  border-bottom: 5px;
 }
 .item-card:hover {
   transform: translateY(-5px);
