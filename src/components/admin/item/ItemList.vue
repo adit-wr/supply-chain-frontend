@@ -130,7 +130,7 @@ h2 {
 }
 
 .add-btn {
-  background-color: #754bc5;
+  background-color: #007220;
   color: white;
   padding: 6px 12px;
   border: none;
@@ -140,7 +140,7 @@ h2 {
 }
 
 .add-btn:hover {
-  background-color: #5a37a0;
+  background-color: #005d1a;
 }
 
 .table-responsive {
@@ -162,7 +162,7 @@ td {
 }
 
 th {
-  background-color: #4b3f6b;
+  background-color: #004915;
   color: white;
   text-transform: uppercase;
   letter-spacing: 0.1em;

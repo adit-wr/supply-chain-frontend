@@ -49,7 +49,7 @@
   <style scoped>
   .sidebar {
     width: 200px;
-    background: #4b3f6b;
+    background: #004915;
     color: white;
     padding: 14px;
     height: 100vh;

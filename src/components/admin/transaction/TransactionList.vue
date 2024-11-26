@@ -144,7 +144,7 @@ export default {
 }
 
 h2 {
-  color: #4b3f6b;
+  color: #004915;
   font-size: 24px;
 }
 
@@ -167,7 +167,7 @@ td {
 }
 
 th {
-  background-color: #4b3f6b;
+  background-color: #004915;
   color: white;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -190,12 +190,12 @@ button {
 }
 
 .verif-btn {
-  background-color: #754bc5;
+  background-color: #00651d;
   color: white;
 }
 
 .return-btn:hover {
-  background-color: #5a37a0;
+  background-color: #005719;
 }
 
 .verif-btn[disabled] {

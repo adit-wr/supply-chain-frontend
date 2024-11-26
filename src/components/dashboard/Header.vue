@@ -88,7 +88,7 @@
   
   <style scoped>
   header {
-    background-color: #4b3f6b;
+    background-color: #004915;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -143,7 +143,7 @@
   .role-selection {
     display: flex;
     justify-content: center;
-    background-color: #4b3f6b;
+    background-color: #004915;
     padding: 10px;
   }
   

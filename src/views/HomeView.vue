@@ -15,12 +15,31 @@
 </template>
 
 <script>
+import Login from "@/components/auth/Login.vue";
+import Register from "@/components/auth/Register.vue";
+
+export default {
+  components: {
+    Login,
+    Register,
+  },
+  data() {
+    return {
+      activeComponent: "Login",
+    };
+  },
+  methods: {
+    setActiveComponent(component) {
+      this.activeComponent = component;
+    },
+  },
+};
 </script>
 
 <style scoped>
 .home-view {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  background-color: #4b3f6b;
+  background-color: #004915;
   min-height: 100vh;
   overflow: auto;
   padding: 20px;

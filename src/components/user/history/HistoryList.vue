@@ -88,7 +88,7 @@
   
   h2 {
     margin-bottom: 20px;
-    color: #4b3f6b;
+    color: #004915;
     text-align: center;
     font-size: 24px;
   }
@@ -112,7 +112,7 @@
   }
   
   th {
-    background-color: #4b3f6b;
+    background-color: #004915;
     color: white;
     text-transform: uppercase;
     letter-spacing: 0.1em;
