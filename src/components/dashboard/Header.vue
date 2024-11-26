@@ -162,11 +162,11 @@
   }
   
   .logout-btn:hover {
-    background-color: #6b5bb8;
+    background-color: #00a02d;
   }
   
   button.active {
-    background-color: #6b5bb8;
+    background-color: #004915;
   }
   
   @media (max-width: 768px) {

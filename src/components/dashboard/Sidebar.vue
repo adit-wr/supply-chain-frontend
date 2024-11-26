@@ -1,6 +1,6 @@
 <template>
     <div :class="['sidebar', { hidden: !isSidebarVisible }]">
-      <a class="logo">Simbok</a>
+      <a class="logo">E-Gudang</a>
       <ul>
         <li v-if="currentRole === 'admin'">
           <a href="#" @click="showComponent('users')" class="nav-link">
